@@ -7,13 +7,12 @@ trigger:
 - master
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: 'win1803'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    iwr -outf generator.zip https://www.aka.ms/azurestackmarketplaceitem
+    Expand-Archive generator.zip -DestinationPath generator
+    cd "generator\Azure Stack Marketplace Item Generator and Sample\AzureGalleryPackageGenerator"
+    .\AzureGalleryPackager.exe -m kubernetes\template\manifest.json -o .
+  displayName: 'Do stuff'
