@@ -13,6 +13,5 @@ steps:
 - powershell: |
     iwr -outf generator.zip https://www.aka.ms/azurestackmarketplaceitem
     Expand-Archive generator.zip -DestinationPath generator
-    cd "generator\Azure Stack Marketplace Item Generator and Sample\AzureGalleryPackageGenerator"
-    .\AzureGalleryPackager.exe -m kubernetes\template\manifest.json -o .
+    ".\generator\Azure Stack Marketplace Item Generator and Sample\AzureGalleryPackageGenerato\AzureGalleryPackager.exe" -m .\kubernetes\template\manifest.json -o .
   displayName: 'Do stuff'
