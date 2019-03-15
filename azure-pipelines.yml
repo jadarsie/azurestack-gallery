@@ -12,10 +12,10 @@ pool:
 steps:
 - powershell: |
     Expand-Archive kubernetes\assets\AzureGalleryPackageGenerator.zip
-    md GalleryPackage
+    New-Item -ItemType Directory -Force -Path $(Build.SourcesDirectory)\GalleryPackage
     AzureGalleryPackageGenerator\AzureGalleryPackager.exe -m $(Build.SourcesDirectory)\kubernetes\template\manifest.json -o GalleryPackage
   displayName: 'Generate Kubernetes gallery item package'
 - task: PublishPipelineArtifact@0
   inputs:
     artifactName: 'GalleryPackage'
-    targetPath: '$(Build.SourcesDirectory)\GalleryPackage\Microsoft.AzureStackKubernetesCluster.0.4.1.azpkg'
+    targetPath: '$(Build.SourcesDirectory)/GalleryPackage/Microsoft.AzureStackKubernetesCluster.0.4.1.azpkg'
