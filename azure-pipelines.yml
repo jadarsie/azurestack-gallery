@@ -1,0 +1,21 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'win1803'
+
+steps:
+- powershell: |
+    Expand-Archive kubernetes\assets\AzureGalleryPackageGenerator.zip
+    md GalleryPackage
+    AzureGalleryPackageGenerator\AzureGalleryPackager.exe -m $(Build.SourcesDirectory)\kubernetes\template\manifest.json -o GalleryPackage
+  displayName: 'Generate Kubernetes gallery item package'
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'GalleryPackage'
+    targetPath: '$(Build.SourcesDirectory)\GalleryPackage\Microsoft.AzureStackKubernetesCluster.0.4.1.azpkg'
