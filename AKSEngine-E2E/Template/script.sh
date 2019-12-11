@@ -1,4 +1,4 @@
-#! /bin/bash -e
+#! /bin/bash -ex
 
 ERR_APT_INSTALL_TIMEOUT=9           # Timeout installing required apt packages
 ERR_AKSE_DOWNLOAD=10                # Failure downloading AKS-Engine binaries
@@ -281,6 +281,12 @@ retrycmd_if_failure 20 30 ensureCertificates
 #####################################################################################
 # Make sure `k` is in the path
 # https://github.com/Azure/aks-engine/blob/master/docs/community/developer-guide.md#end-to-end-tests
+
+KUBECTL_VERSION=1.15.7
+
+echo "==> Downloading kubectl version ${KUBECTL_VERSION} <=="
+sudo curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
+sudo chmod +x /usr/local/bin/kubectl
 
 sudo cp $ROOT_PATH/src/github.com/Azure/aks-engine/scripts/k /usr/local/bin/k
 sudo chmod +x /usr/local/bin/k
