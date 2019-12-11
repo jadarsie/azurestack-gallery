@@ -493,16 +493,15 @@ log_level -i "SUBSCRIPTION_ID: $SUBSCRIPTION_ID"
 log_level -i "TENANT_ID: $TENANT_ID"
 log_level -i "------------------------------------------------------------------------"
 
-set +e
 make test-kubernetes > deploy_test_results
-set -e
 
 RESULT=$?
 
 chown -R azureuser /home/azureuser
 chmod -R u=rwx /home/azureuser
 
-# Below condition is to make the deployment success even if the test cases fail, if the deployment of kubernetes fails it exits with the failure code
+# Below condition is to make the deployment success even if the test cases fail, 
+# if the deployment of kubernetes fails it exits with the failure code
 log_level -i "Result: $RESULT"
 if [ $RESULT -gt 3 ] ; then
     exit 1
